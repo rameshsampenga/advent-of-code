@@ -47,17 +47,15 @@ def dict_paths_count(data_map, device_start):
             device_map['dac+fft'] = device_map.get(alt_key)
             device_map.pop(alt_key)
 
+    def merge_device_map(device_map, child_device_map):
+        for key in child_device_map.keys():
+            if key in device_map:
+                device_map[key] += child_device_map[key]
+            else:
+                device_map[key] = child_device_map[key]
+
     root_device_map = dfs(device_start)
     return root_device_map
-
-
-def merge_device_map(device_map, child_device_map):
-    for key in child_device_map.keys():
-        if key in device_map:
-            device_map[key] += child_device_map[key]
-        else:
-            device_map[key] = child_device_map[key]
-
 
 def open_file(filename):
     current_dir = os.path.dirname(os.path.abspath(__file__))
